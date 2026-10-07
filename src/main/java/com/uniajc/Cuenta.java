@@ -14,6 +14,9 @@ public class Cuenta {
     }
 
     public void consignar(float cantidad) {
+        if (cantidad < 0) {
+            throw new IllegalArgumentException("La cantidad a consignar no puede ser negativa");
+        }
         saldo += cantidad;
         numeroConsignaciones++;
     }
@@ -26,12 +29,23 @@ public class Cuenta {
     }
 
     public void calcularInteres() {
-        saldo += saldo * tasaAnual / 12;
+        float tasaMensual = tasaAnual / 12;
+        float interesMensual = saldo * tasaMensual;
+        saldo += interesMensual;
     }
 
     public void extractoMensual() {
         saldo -= comisionMensual;
         calcularInteres();
+    }
+
+    public void imprimir() {
+        System.out.println("Saldo: " + saldo);
+        System.out.println("Número de consignaciones: " + numeroConsignaciones);
+        System.out.println("Número de retiros: " + numeroRetiros);
+        System.out.println("Numero de transacciones: " + (numeroConsignaciones + numeroRetiros));
+        System.out.println("Tasa anual: " + tasaAnual);
+        System.out.println("Comisión mensual: " + comisionMensual);
     }
 
 }
